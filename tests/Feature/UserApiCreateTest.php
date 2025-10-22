@@ -10,7 +10,7 @@ use App\Notifications\UserCreatedNotification;
 use App\Notifications\AdminUserCreatedNotification;
 use Tests\TestCase;
 
-class UserApiTest extends TestCase
+class UserApiCreateTest extends TestCase
 {
     use RefreshDatabase;
 

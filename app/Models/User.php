@@ -50,4 +50,22 @@ class User extends Authenticatable
             'created_at' => 'datetime',
         ];
     }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function canEdit(User $targetUser): bool
+    {
+        if ($this->role === 'administrator') {
+            return true;
+        }
+
+        if ($this->role === 'manager' && $targetUser->role === 'user') {
+            return true;
+        }
+
+        return $this->id === $targetUser->id;
+    }
 }
