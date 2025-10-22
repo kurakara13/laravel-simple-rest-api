@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CreateUserRequest extends FormRequest
 {
@@ -32,5 +34,15 @@ class CreateUserRequest extends FormRequest
             'name.min' => 'Name must be at least 3 characters.',
             'name.max' => 'Name cannot exceed 50 characters.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422)
+        );
     }
 }
